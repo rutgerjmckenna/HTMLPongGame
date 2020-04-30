@@ -21,6 +21,7 @@
         //labeled in a different way to remind ones self that this is
         //a const and therefore can't change
         const PADDLE_HEIGHT = 100;
+        const PADDLE_THICKENSS = 10;
 
         //An event fires everytime the mouse moves and this
         //function will then read it
@@ -38,7 +39,6 @@
 
         //this means to run this function on window load
         window.onload = function(){
-            console.log("Howdy country!");
             //this corresponds to the label in our canvas id
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
@@ -67,6 +67,16 @@
             ballX = canvas.width/2;
             ballY = canvas.height/2;
         }
+        
+        //movement of ai
+        function computerMovement(){
+            if(paddle2Y < ballY) {
+                paddle2Y = paddle2Y + 6;
+            } else {
+                paddle2Y = paddle2Y - 6;
+            }
+        }
+
 
         //Below are our paddle and ball functions
 
@@ -74,6 +84,8 @@
         //This allows the ball to bounce back at the same speed by
         //referencing itself and the canvas
         function moveEverything() {
+            computerMovement();
+
             ballX = ballX + ballSpeedX;
             ballY = ballY + ballSpeedY;
 
@@ -87,7 +99,11 @@
   
             }
             if(ballX > canvas.width) {
-                ballSpeedX = -ballSpeedX;
+                if(ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT){
+                    ballSpeedX = -ballSpeedX;
+                } else {
+                    ballReset();
+                }
             }
             if(ballY < 0) {
                 ballSpeedY = -ballSpeedY;
@@ -114,10 +130,10 @@
             //PADDLES
 
             //Human Player
-            colorRect(0,paddle1Y,10,PADDLE_HEIGHT,'white');
+            colorRect(0,paddle1Y,PADDLE_THICKENSS,PADDLE_HEIGHT,'white');
 
             //AI
-            colorRect(canvas.width-10,paddle2Y,10,PADDLE_HEIGHT,'white');
+            colorRect(canvas.width-PADDLE_THICKENSS,paddle2Y,10,PADDLE_HEIGHT,'white');
 
             //---------------------------------------------------------
             //BALL
