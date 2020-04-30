@@ -1,0 +1,26 @@
+<html>
+    some text here
+
+    <!-- this is so we can set the game area size in a canvas to play -->
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas;
+        const canvasContext;
+
+        //this means to run this function on window load
+        window.onload = function(){
+            console.log("Howdy country!");
+            //this corresponds to the label in our canvas id
+            canvas = document.getElementById('gameCanvas')
+            canvasContext = convas.getContext('2d');
+            //sets the color of the fill
+            canvasContext.fillStyle = 'black';
+            //how to fill the rectangle. This refers back to the canvas
+            //by identifying the heighth and width, and 
+            // 0, 0 is from the left and from the top
+            canvasContext.fillRect(0,0,canvas.width,canvas.height)
+        }
+
+    </script>
+</html>
