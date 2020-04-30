@@ -12,6 +12,7 @@
         var canvas;
         var canvasContext;
         var ball = 50;
+        var ballSpeed = 10;
 
         //this means to run this function on window load
         window.onload = function(){
@@ -27,32 +28,66 @@
             //We call this here so it'll be forgotten once its done with
             //This allows us to make our own custom frame rate easier
             var framesPerSecond = 30;
-            setInterval(drawGameComponents, 1000/framesPerSecond);
+            setInterval(function(){
+                moveEverything();
+                drawGameComponents();
+            }, 1000/framesPerSecond);
 
         }
 
-        //This will be all our paddles and balls!
+        //Below are our paddle and ball functions
+
+
+        //This allows the ball to bounce back at the same speed by
+        //referencing itself and the canvas
+        function moveEverything() {
+            ball = ball + ballSpeed;
+            if(ball < 0) {
+                ballSpeed = -ballSpeed;
+            }
+            if(ball > canvas.width) {
+                ballSpeed = -ballSpeed;
+            }
+        }
 
         function drawGameComponents() {
-            ball = ball + 5;
-
-            //sets the color of the fill
-            canvasContext.fillStyle = 'black';
-            //how to fill the rectangle. This refers back to the canvas
-            //by identifying the heighth and width, and 
-            // 0, 0 is from the left and from the top (top left corner!)
+            
+            //---------------------------------------------------------
+            //BACKGROUND
 
             //Position 1: horizontal position
             //Position 2: vertical position
             //Position 3: width
             //Posotion 4: height
-            canvasContext.fillRect(0,0,canvas.width,canvas.height);
+            colorRect(0,0,canvas.width,canvas.height,'black');
             //Remember to center something it must be subtracted by half as
             //it'll be centered on whatever its top left corner is
+            //---------------------------------------------------------
+
+            //---------------------------------------------------------
+            //PADDLES
+
+            canvasContext.fillStyle = 'white';
+            canvasContext.fillRect(0,210,10,100);
+
+
+            //---------------------------------------------------------
+
+            //---------------------------------------------------------
+            //BALL
 
             console.log(ball);
             canvasContext.fillStyle = 'white';
             canvasContext.fillRect(ball,100,10,10)
+        }
+
+        //Extrapolating the canvas here to variables so we can fill it in
+        //above easily, adding the drawColor variable to now call in the previous
+        //function by calling and setting the 'colorRect' in our 
+        //drawComponents()
+        function colorRect(leftX,topY,width,height,drawColor) {
+            canvasContext.fillStyle = drawColor;
+            canvasContext.fillRect(leftX,topY,canvas.width,canvas.height);
         }
 
     </script>
