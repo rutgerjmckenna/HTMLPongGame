@@ -43,6 +43,14 @@
             };
         }
 
+        function handleMouseClick(evt) {
+            if(showingWinScreen) {
+                player1Score = 0;
+                player2Score = 0;
+                showingWinScreen = false;
+            }
+        }
+
         //this means to run this function on window load
         window.onload = function(){
             //this corresponds to the label in our canvas id
@@ -60,6 +68,8 @@
                 moveEverything();
                 drawGameComponents();
             }, 1000/framesPerSecond);
+
+            canvas.addEventListener('mousedown', handleMouseClick);
 
             canvas.addEventListener('mousemove',
                 function(evt) {
@@ -94,8 +104,6 @@
         //Below are our paddle and ball functions
 
 
-        //This allows the ball to bounce back at the same speed by
-        //referencing itself and the canvas
         function moveEverything() { 
             if(showingWinScreen) {
             return; 
@@ -137,6 +145,15 @@
             }
         }
 
+        function drawNet() {
+            for(var i=0; i<canvas.height; i+=40){
+                //makes it 2 pixels thick at the variable in the loop (i)
+                //it'll jump in intervals of 40 pixels at a time
+                //it'll be 20 pixels long
+                colorRect(canvas.width/2-1,i,2,20,'white');
+            }
+        }
+
         function drawGameComponents() {
             //---------------------------------------------------------
             //BACKGROUND
@@ -149,14 +166,24 @@
             //Remember to center something it must be subtracted by half as
             //it'll be centered on whatever its top left corner is
 
-            if(showingWinScreen) {
-                canvasContext.fillStyle = 'white';
-                canvasContext.fillText("click to continue",100,100);
+            if(showingWinScreen) {   
+                canvasContext.fillStyle= 'white';
+                if(player1Score >= WINNING_SCORE) {
+                    canvasContext.fillText("Left player wins!",350,200);
+                } 
+                else if(player2Score >= WINNING_SCORE) {
+                    canvasContext.fillText("Right player wins!",350,200);
+                }
+
+                canvasContext.fillText("click to continue", 350, 500);
                 return;
             }
 
             //---------------------------------------------------------
-            //PADDLES
+            //PADDLES & Net
+
+            //Net
+            drawNet();
 
             //Human Player
             colorRect(0,paddle1Y,PADDLE_THICKENSS,PADDLE_HEIGHT,'white');
