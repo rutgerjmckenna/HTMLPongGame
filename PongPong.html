@@ -19,26 +19,40 @@
             //this corresponds to the label in our canvas id
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-            //sets the color of the fill
-            canvasContext.fillStyle = 'black';
-            //how to fill the rectangle. This refers back to the canvas
-            //by identifying the heighth and width, and 
-            // 0, 0 is from the left and from the top (top left corner!)
-            canvasContext.fillRect(0,0,canvas.width,canvas.height);
-            //Remember to center something it must be subtracted by half as
-            //it'll be centered on whatever its top left corner is
-            drawGameComponents();
+
+
+            //Simple animation for how often we will call the function
+            //drawGameComponents. Here, its once every 1000 milliseconds
+
+            //We call this here so it'll be forgotten once its done with
+            //This allows us to make our own custom frame rate easier
+            var framesPerSecond = 30;
+            setInterval(drawGameComponents, 1000/framesPerSecond);
 
         }
 
         //This will be all our paddles and balls!
 
         function drawGameComponents() {
-            ball = ball + 10;
+            ball = ball + 5;
+
+            //sets the color of the fill
+            canvasContext.fillStyle = 'black';
+            //how to fill the rectangle. This refers back to the canvas
+            //by identifying the heighth and width, and 
+            // 0, 0 is from the left and from the top (top left corner!)
+
+            //Position 1: horizontal position
+            //Position 2: vertical position
+            //Position 3: width
+            //Posotion 4: height
+            canvasContext.fillRect(0,0,canvas.width,canvas.height);
+            //Remember to center something it must be subtracted by half as
+            //it'll be centered on whatever its top left corner is
 
             console.log(ball);
             canvasContext.fillStyle = 'white';
-            canvasContext.fillRect(ball,200,50,25)
+            canvasContext.fillRect(ball,100,10,10)
         }
 
     </script>
