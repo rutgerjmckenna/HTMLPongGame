@@ -16,6 +16,9 @@
         var ballSpeedX = 10;
         var ballSpeedY = 4;
 
+        var player1Score = 0;
+        var player2Score = 0;
+
         var paddle1Y = 250;
         var paddle2Y = 250;
         //labeled in a different way to remind ones self that this is
@@ -94,16 +97,24 @@
                 //ballSpeedX = -ballSpeedX;
                 if(ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT){
                     ballSpeedX = -ballSpeedX;
+
+                    var deltaY = ballY - (paddle1Y+PADDLE_HEIGHT/2);
+                    ballSpeedY = deltaY * 0.35;
                 } else {
                     ballReset();
+                    player2Score++;
                 }
   
             }
             if(ballX > canvas.width) {
                 if(ballY > paddle2Y && ballY < paddle2Y + PADDLE_HEIGHT){
                     ballSpeedX = -ballSpeedX;
+
+                    var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
+                    ballSpeedY = deltaY * 0.35;
                 } else {
                     ballReset();
+                    player1Score++;
                 }
             }
             if(ballY < 0) {
@@ -139,6 +150,9 @@
             //---------------------------------------------------------
             //BALL
             colorCircle(ballX,ballY,10,'white');
+
+            canvasContext.fillText(player1Score,100,100)
+            canvasContext.fillText(player2Score,canvas.width-100,100)
            
         }
 
