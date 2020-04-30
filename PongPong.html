@@ -11,8 +11,10 @@
 
         var canvas;
         var canvasContext;
-        var ball = 50;
-        var ballSpeed = 10;
+        var ballX = 50;
+        var ballY = 50;
+        var ballSpeedX = 10;
+        var ballSpeedY = 4;
 
         //this means to run this function on window load
         window.onload = function(){
@@ -41,12 +43,19 @@
         //This allows the ball to bounce back at the same speed by
         //referencing itself and the canvas
         function moveEverything() {
-            ball = ball + ballSpeed;
-            if(ball < 0) {
-                ballSpeed = -ballSpeed;
+            ballX = ballX + ballSpeedX;
+            ballY = ballY + ballSpeedY;
+            if(ballX < 0) {
+                ballSpeedX = -ballSpeedX;
             }
-            if(ball > canvas.width) {
-                ballSpeed = -ballSpeed;
+            if(ballX > canvas.width) {
+                ballSpeedX = -ballSpeedX;
+            }
+            if(ballY < 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+            if(ballY > canvas.height) {
+                ballSpeedY = -ballSpeedY;
             }
         }
 
@@ -69,11 +78,11 @@
             colorRect(0,210,10,100,'white');
             //---------------------------------------------------------
             //BALL
-            colorCircle(ball,150,10,'white')
+            colorCircle(ballX,ballY,10,'white');
            
         }
 
-        function colorCirlce(centerX,centerY,radius,drawColor) {
+        function colorCircle(centerX,centerY,radius,drawColor) {
 
             canvasContext.fillStyle = drawColor;
             //Allows us to define a shape to be able to fill in
