@@ -1,5 +1,4 @@
 <html>
-    some text here
 
     <!-- this is so we can set the game area size in a canvas to play -->
     <canvas id="gameCanvas" width="800" height="600"></canvas>
@@ -7,19 +6,33 @@
     <script>
         const canvas;
         const canvasContext;
+        const ball = 50;
 
         //this means to run this function on window load
         window.onload = function(){
             console.log("Howdy country!");
             //this corresponds to the label in our canvas id
-            canvas = document.getElementById('gameCanvas')
-            canvasContext = convas.getContext('2d');
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
             //sets the color of the fill
             canvasContext.fillStyle = 'black';
             //how to fill the rectangle. This refers back to the canvas
             //by identifying the heighth and width, and 
-            // 0, 0 is from the left and from the top
-            canvasContext.fillRect(0,0,canvas.width,canvas.height)
+            // 0, 0 is from the left and from the top (top left corner!)
+            canvasContext.fillRect(0,0,canvas.width,canvas.height);
+            //Remember to center something it must be subtracted by half as
+            //it'll be centered on whatever its top left corner is
+            drawGameComponents();
+        }
+
+        //This will be all our paddles and balls!
+
+        function drawGameComponents() {
+            ball = ball + 10;
+
+            console.log('Drawing reached')
+            canvasContext.fillStyle = 'white';
+            canvasContext.fillRect(ball,200,50,25)
         }
 
     </script>
