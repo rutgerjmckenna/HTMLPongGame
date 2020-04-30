@@ -16,6 +16,26 @@
         var ballSpeedX = 10;
         var ballSpeedY = 4;
 
+        var paddle1Y = 250;
+        var paddle2Y = 250;
+        //labeled in a different way to remind ones self that this is
+        //a const and therefore can't change
+        const PADDLE_HEIGHT = 100;
+
+        //An event fires everytime the mouse moves and this
+        //function will then read it
+        function calculateMousePos(evt) {
+            var rect = canvas.getBoundingClientRect();
+            var root = document.documentElement;
+            var mouseX = evt.clientX - rect.left - root.scrollLeft;
+            var mouseY = evt.clientY - rect.top - root.scrollTop;
+            //keeps the mouse coordinates compact
+            return {
+                x:mouseX,
+                y:mouseY
+            };
+        }
+
         //this means to run this function on window load
         window.onload = function(){
             console.log("Howdy country!");
@@ -35,6 +55,17 @@
                 drawGameComponents();
             }, 1000/framesPerSecond);
 
+            canvas.addEventListener('mousemove',
+                function(evt) {
+                    var mousePos = calculateMousePos(evt);
+                    paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
+                });
+        }
+
+
+        function ballReset() {
+            ballX = canvas.width/2;
+            ballY = canvas.height/2;
         }
 
         //Below are our paddle and ball functions
@@ -45,8 +76,15 @@
         function moveEverything() {
             ballX = ballX + ballSpeedX;
             ballY = ballY + ballSpeedY;
+
             if(ballX < 0) {
-                ballSpeedX = -ballSpeedX;
+                //ballSpeedX = -ballSpeedX;
+                if(ballY > paddle1Y && ballY < paddle1Y + PADDLE_HEIGHT){
+                    ballSpeedX = -ballSpeedX;
+                } else {
+                    ballReset();
+                }
+  
             }
             if(ballX > canvas.width) {
                 ballSpeedX = -ballSpeedX;
@@ -75,7 +113,12 @@
             //---------------------------------------------------------
             //PADDLES
 
-            colorRect(0,210,10,100,'white');
+            //Human Player
+            colorRect(0,paddle1Y,10,PADDLE_HEIGHT,'white');
+
+            //AI
+            colorRect(canvas.width-10,paddle2Y,10,PADDLE_HEIGHT,'white');
+
             //---------------------------------------------------------
             //BALL
             colorCircle(ballX,ballY,10,'white');
