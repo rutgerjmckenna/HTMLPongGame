@@ -4,9 +4,14 @@
     <canvas id="gameCanvas" width="800" height="600"></canvas>
 
     <script>
-        const canvas;
-        const canvasContext;
-        const ball = 50;
+        //To use const, it must be set to an initial value or we will
+        // get Uncaught SyntaxError: Missing initializer in const declaration
+
+        //An easy fix for this error is to use var
+
+        var canvas;
+        var canvasContext;
+        var ball = 50;
 
         //this means to run this function on window load
         window.onload = function(){
@@ -23,6 +28,7 @@
             //Remember to center something it must be subtracted by half as
             //it'll be centered on whatever its top left corner is
             drawGameComponents();
+
         }
 
         //This will be all our paddles and balls!
@@ -30,7 +36,7 @@
         function drawGameComponents() {
             ball = ball + 10;
 
-            console.log('Drawing reached')
+            console.log(ball);
             canvasContext.fillStyle = 'white';
             canvasContext.fillRect(ball,200,50,25)
         }
