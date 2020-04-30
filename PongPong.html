@@ -62,23 +62,32 @@
             colorRect(0,0,canvas.width,canvas.height,'black');
             //Remember to center something it must be subtracted by half as
             //it'll be centered on whatever its top left corner is
-            //---------------------------------------------------------
 
             //---------------------------------------------------------
             //PADDLES
 
-            canvasContext.fillStyle = 'white';
-            canvasContext.fillRect(0,210,10,100);
-
-
-            //---------------------------------------------------------
-
+            colorRect(0,210,10,100,'white');
             //---------------------------------------------------------
             //BALL
+            colorCircle(ball,150,10,'white')
+           
+        }
 
-            console.log(ball);
-            canvasContext.fillStyle = 'white';
-            canvasContext.fillRect(ball,100,10,10)
+        function colorCirlce(centerX,centerY,radius,drawColor) {
+
+            canvasContext.fillStyle = drawColor;
+            //Allows us to define a shape to be able to fill in
+            canvasContext.beginPath(); 
+            //The only way to draw a circle is with arc
+            //Position 1: X
+            //Position 2: Y
+            //(Instead of the top left of the retangle, it is now the center of the cirle)
+            //Position 3: Radius of the circle
+            //Position 4/5: Cuts up our circle into radians
+            //Math.PI*2 is half a circle
+            //Position 6: If it is filling in the circle clockwise or counter
+            canvasContext.arc(centerX,centerY,radius,0,Math.PI*2,true);
+            canvasContext.fill();
         }
 
         //Extrapolating the canvas here to variables so we can fill it in
@@ -87,7 +96,7 @@
         //drawComponents()
         function colorRect(leftX,topY,width,height,drawColor) {
             canvasContext.fillStyle = drawColor;
-            canvasContext.fillRect(leftX,topY,canvas.width,canvas.height);
+            canvasContext.fillRect(leftX,topY,width,height);
         }
 
     </script>
