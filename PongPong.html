@@ -18,6 +18,9 @@
 
         var player1Score = 0;
         var player2Score = 0;
+        const WINNING_SCORE = 3;
+
+        var showingWinScreen = false;
 
         var paddle1Y = 250;
         var paddle2Y = 250;
@@ -67,6 +70,12 @@
 
 
         function ballReset() {
+            if(player1Score >= WINNING_SCORE|| player2Score >= WINNING_SCORE) {
+                player1Score = 0;
+                player2Score = 0;
+                showingWinScreen = true;
+            }
+
             ballX = canvas.width/2;
             ballY = canvas.height/2;
         }
@@ -87,7 +96,10 @@
 
         //This allows the ball to bounce back at the same speed by
         //referencing itself and the canvas
-        function moveEverything() {
+        function moveEverything() { 
+            if(showingWinScreen) {
+            return; 
+        }
             computerMovement();
 
             ballX += ballSpeedX;
@@ -101,8 +113,8 @@
                     var deltaY = ballY - (paddle1Y+PADDLE_HEIGHT/2);
                     ballSpeedY = deltaY * 0.35;
                 } else {
+                    player2Score++; //Checks win condition BEFORE ball reset
                     ballReset();
-                    player2Score++;
                 }
   
             }
@@ -113,8 +125,8 @@
                     var deltaY = ballY - (paddle2Y+PADDLE_HEIGHT/2);
                     ballSpeedY = deltaY * 0.35;
                 } else {
-                    ballReset();
                     player1Score++;
+                    ballReset();
                 }
             }
             if(ballY < 0) {
@@ -126,7 +138,6 @@
         }
 
         function drawGameComponents() {
-            
             //---------------------------------------------------------
             //BACKGROUND
 
@@ -137,6 +148,12 @@
             colorRect(0,0,canvas.width,canvas.height,'black');
             //Remember to center something it must be subtracted by half as
             //it'll be centered on whatever its top left corner is
+
+            if(showingWinScreen) {
+                canvasContext.fillStyle = 'white';
+                canvasContext.fillText("click to continue",100,100);
+                return;
+            }
 
             //---------------------------------------------------------
             //PADDLES
